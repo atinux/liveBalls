@@ -1,9 +1,19 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.4.3"
-    , "jade": ">= 0.0.1"
-  }
+  "author": "Sebastien Chopin <atinux@gmail.com> (https://twitter.com/Atinux)",
+  "name": "LiveBalls",
+  "description": "Real time Application",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Atinux/liveBalls.git"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+      "express": "2.4.3",
+      "jade": ">= 0.0.1",
+      "socket.io": "0.7.9"
+   },
+  "devDependencies": {}
 }
