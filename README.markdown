@@ -1,7 +1,6 @@
 <h2>LIVE BALLS</h2>
 
-liveBalls is a application wich you can chat with others persons connected on your server and move with your mouse.
-
+LiveBalls is an real time application wich you can chat with others persons connected on your server and move your ball with your mouse.
 
 You need to have nodejs and npm installed on your computer.
 
@@ -18,4 +17,4 @@ node app.js
 
 <h2>Screenshot</h2>
 
-<img src="http://s3.amazonaws.com/twitpic/photos/full/359196747.png?AWSAccessKeyId=AKIAJF3XCCKACR3QDMOA&Expires=1313853992&Signature=9cd6ziMFwSD8dSTh0vUFzwOx5WM%3D" alt="preview" />
+<img src="http://i1096.photobucket.com/albums/g325/Atinux/Capture-Ballsinrealtime-Chromium.png?t=1313853564" alt="preview" />
