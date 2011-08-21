@@ -18,3 +18,7 @@ node app.js
 <h2>Screenshot</h2>
 
 <img src="http://i1096.photobucket.com/albums/g325/Atinux/Capture-Ballsinrealtime-Chromium.png?t=1313853564" alt="preview" />
+
+<h2>Demonstration in video</h2>
+
+<b>Here :</b> http://www.youtube.com/watch?v=EqWD1WGrdjw
