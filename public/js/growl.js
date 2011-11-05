@@ -11,7 +11,7 @@ $.growl = function(body, type, type2){
   container.append(msg);
 
   msg.show("drop", { direction: "down", distance: 50 }, 300)
-    .delay(2000)
+    .delay(2500)
     .fadeOut(300, function(){
       $(this).remove();
     });

@@ -5,6 +5,7 @@
       this.url = url;
       this.options = options;
       this.connected = false;
+      $.growl('Connecting...');
       this.keepConnexion();
     }
     Msock.prototype.keepConnexion = function() {
@@ -12,7 +13,7 @@
       that = this;
       this.socket = io.connect(this.url, this.options);
       this.socket.on('connecting', function(type) {
-        $.growl('Connecting with [' + type + ']...');
+        $.growl('With [' + type + ']...');
         return that.type = type;
       });
       this.socket.on('connect', function() {

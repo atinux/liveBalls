@@ -3,6 +3,7 @@
 class Msock
 	constructor: (@url, @options) ->
 		@connected = false
+		$.growl('Connecting...');
 		@keepConnexion()
 	keepConnexion: ->
 		# connection socket.io
