@@ -12,7 +12,7 @@
       that = this;
       this.socket = io.connect(this.url, this.options);
       this.socket.on('connecting', function(type) {
-        $.growl('Connecting...[' + type + ']');
+        $.growl('Connecting with [' + type + ']...');
         return that.type = type;
       });
       this.socket.on('connect', function() {

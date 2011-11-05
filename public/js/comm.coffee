@@ -9,7 +9,7 @@ class Msock
 		that = @
 		@socket = io.connect(@url, @options);
 		@socket.on('connecting', (type) ->
-			$.growl('Connecting...['+type+']')
+			$.growl('With ['+type+']...')
 			that.type = type
 		)
 		@socket.on('connect', ->

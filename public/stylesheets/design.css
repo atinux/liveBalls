@@ -1,0 +1,76 @@
+body {
+	background-color:rgb(20,40,60);
+	font-size: 1em;
+}
+
+.cadre {
+	background-color:rgb(40,60,90);
+	box-shadow: 0px 0px 30px black; -webkit-box-shadow: 0px 0px 30px black; -moz-box-shadow: 0px 0px 30px black;
+	border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+}
+
+.title {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	text-shadow: 2px 5px 2px #001428; -webkit-text-shadow: 2px 5px 2px #001428; -moz-text-shadow: 2px 5px 2px #001428;
+	font-size: 47px;
+	color:white;
+	text-align:center;
+}
+
+.ball
+{
+	width:20px;
+	height:20px;
+	border:3px white solid;
+	position:absolute;
+	border-radius:15px; -moz-border-radius:15px; -webkit-border-radius:15px;
+}
+.alert_chat
+{
+	position:absolute;
+	background-color:white;
+	opacity:0.6;
+	color:rgb(30,30,30);
+	border:rgb(70,70,70) solid 1px;
+	padding:4px;
+	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;
+	font-size:0.9em;
+	margin-left:25px;
+	margin-top:-15px;
+	white-space:nowrap;
+}
+
+#growl {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  overflow: hidden;
+}
+
+#growl .msg {
+  border: 1px solid #171717;
+  color: #E4E4E4;
+  text-shadow: 0 -1px 1px #0A131A;
+
+  font-weight: bold;
+  width: 200px;
+  min-height: 30px;
+  padding: 10px;
+  font-size: 15px;
+  margin-bottom: 10px;
+
+  background: #141517;
+  background: -webkit-gradient(
+    linear, left top, left bottom, 
+    from(rgba(255, 255, 255, 0.3)), 
+    color-stop(0.8, rgba(255, 255, 255, 0))), 
+    rgba(0, 0, 0, 0.8);
+
+  box-shadow: inset 0 1px 1px #8E8E8E;
+  -webkit-box-shadow: inset 0 1px 1px #8E8E8E;
+  -moz-box-shadow: inset 0 1px 1px #8E8E8E;
+
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+}
