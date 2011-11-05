@@ -5,7 +5,10 @@
 <title>Balls in real time !</title>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/growl.js"></script>
 <script type="text/javascript" src="socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="stylesheets/growl.css">
 <style type="text/css">
 .ball
 {
@@ -14,6 +17,8 @@ height:20px;
 border:3px white solid;
 position:absolute;
 border-radius:15px;
+-moz-border-radius:15px;
+-webkit-border-radius:15px;
 }
 .alert_chat
 {
@@ -32,6 +37,9 @@ white-space:nowrap;
 </style>
 </head>
 <body style="background-color:rgb(100,100,150);">
+
+<a href="https://github.com/Atinux/liveBalls"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+
 <h1 style="color:white;text-align:center;">Live Balls</h1>
 
 <div style="width:500px;height:500px;background-color:rgb(50,50,100);border:3px black dashed;overflow:auto;margin:auto;" id="zone">
@@ -45,10 +53,7 @@ function htmlspecialchars(string)
 	return $('<span>').text(string).html();
 }
 
-var name = htmlspecialchars(prompt("What's your name?", ""));
-if (name == '')
- 	name = 'Anonymous';
-
+var name = htmlspecialchars(prompt("What's your name?", "") || 'Anonymous') || 'Anonymous';
 // Ball's color
 var r = Math.round(Math.random() * 255);
 var g = Math.round(Math.random() * 255);
@@ -69,90 +74,90 @@ var pl = {
 
 var ball = '';
 
-var socket = io.connect();
+jQuery(function ($) {
 
-// Connexion, we get the Array of connected players
-socket.on('connect', function () {
-    socket.emit('client_connected', pl);
-});
-// ID of ball
-socket.on('id_ball', function (id) {
-    pl.id = id;
-});
-// List of all connected players' hash
-socket.on('get_all_balls', function (tab_pl) {
-    $('#zone').html('');
-    var i = 0;
-    var bl;
-    pos = $('#zone').position();
-    while (i < tab_pl.length)
+	var socket = new Msock();
+
+	// Connexion, we get the Array of connected players
+	socket.on('connect', function () {
+			socket.emit('client_connected', pl);
+	});
+	// ID of ball
+	socket.on('id_ball', function (id) {
+			pl.id = id;
+	});
+	// List of all connected players' hash
+	socket.on('get_all_balls', function (tab_pl) {
+			$('#zone').html('');
+			var i = 0;
+			var bl;
+			pos = $('#zone').position();
+			while (i < tab_pl.length)
+		{
+				bl = tab_pl[i];
+				ball = '<div id="'+bl.id+'" class="ball" style="background-color:'+bl.cl+';left:'+(pos.left + bl.x)+'px;top:'+(pos.top + bl.y)+'px;"><div style="font-size:10px;position:absolute;margin-top:25px;width:50px;text-align:center;margin-left:-14px;"><b>'+bl.name+'</b></div><div class="chat"></div></div>';
+				$('#zone').append(ball);
+				i++;
+		}
+	});
+
+	socket.on('new_ball', function (data) {
+		pos = $('#zone').position();
+		ball = '<div id="'+data.id+'" class="ball" style="background-color:'+data.cl+';left:'+(pos.left + data.x)+'px;top:'+(pos.top + data.y)+'px;"><div style="font-size:10px;position:absolute;margin-top:25px;width:50px;text-align:center;margin-left:-14px;"><b>'+data.name+'</b></div><div class="chat"></div></div>';
+		$('#zone').append(ball);
+	});
+
+	socket.on('move_the_ball', function (data) {
+		 var effect = $('#select_easing').val();
+		 var duration = Math.round($('#duration').val());
+		 pos = $('#zone').position();
+		 $('#'+data.id).animate({
+		left : pos.left + data.x,
+		top : pos.top + data.y
+		}, duration, effect);
+	});
+
+	var id_msg = 0;
+	socket.on('get_msg', function (data, msg) {
+			$('#'+data.id+' .chat').hide().append('<div class="alert_chat" id="msg_'+id_msg+'">'+msg+'</b></div>').fadeIn(300);
+			(function (id_msg)
+			{
+				setTimeout(function () {
+					$('#msg_'+id_msg).fadeOut(300, function () {
+						$('#msg_'+id_msg).remove();
+					});
+				}, 3000);
+		})(id_msg);
+		id_msg++;
+	});
+
+	function move_ball(x, y)
 	{
-	    bl = tab_pl[i];
-	    ball = '<div id="'+bl.id+'" class="ball" style="background-color:'+bl.cl+';left:'+(pos.left + bl.x)+'px;top:'+(pos.top + bl.y)+'px;"><div style="font-size:10px;position:absolute;margin-top:25px;width:50px;text-align:center;margin-left:-14px;"><b>'+bl.name+'</b></div><div class="chat"></div></div>';
-	    $('#zone').append(ball);
-	    i++;
+		var effect = $('#select_easing').val();
+		var duration = Math.round($('#duration').val());
+
+		pos = $('#zone').position();
+		pl.x = x - pos.left;
+		pl.y = y - pos.top;
+		socket.emit('move_ball', pl);
+		$('#'+pl.id).animate({
+		left : x,
+		top : y
+		}, duration, effect);
+			$('#msg').focus();
 	}
-});
-
-socket.on('new_ball', function (data) {
-	pos = $('#zone').position();
-	ball = '<div id="'+data.id+'" class="ball" style="background-color:'+data.cl+';left:'+(pos.left + data.x)+'px;top:'+(pos.top + data.y)+'px;"><div style="font-size:10px;position:absolute;margin-top:25px;width:50px;text-align:center;margin-left:-14px;"><b>'+data.name+'</b></div><div class="chat"></div></div>';
-	$('#zone').append(ball);
-});
-
-socket.on('move_the_ball', function (data) {
-   var effect = $('#select_easing').val();
-   var duration = Math.round($('#duration').val());
-   pos = $('#zone').position();
-   $('#'+data.id).animate({
-	left : pos.left + data.x,
-	top : pos.top + data.y
-  }, duration, effect);
-});
-
-var id_msg = 0;
-socket.on('get_msg', function (data, msg) {
-    $('#'+data.id+' .chat').hide().append('<div class="alert_chat" id="msg_'+id_msg+'">'+msg+'</b></div>').fadeIn(300);
-    (function (id_msg)
-    {
-	    setTimeout(function () {
-		    $('#msg_'+id_msg).fadeOut(300, function () {
-		    	$('#msg_'+id_msg).remove();
-		    });
-	    }, 1500);
-	})(id_msg);
-	id_msg++;
-});
-
-function move_ball(x, y)
-{
-  var effect = $('#select_easing').val();
-  var duration = Math.round($('#duration').val());
-
-  pos = $('#zone').position();
-  pl.x = x - pos.left;
-  pl.y = y - pos.top;
-  socket.emit('move_ball', pl);
-  $('#'+pl.id).animate({
-	left : x,
-	top : y
-  }, duration, effect);
-    $('#msg').focus();
-}
-
-jQuery(document).ready(function(){
-   $('#zone').click(function(e){
+	 $('#zone').click(function(e){
 	move_ball(e.pageX - 11, e.pageY - 12);
-   });
-  // chat
+	 });
+	// chat
 	$('#send').submit(function(e){
 		var msg = htmlspecialchars($('#msg').val());
-        socket.emit('tchat', msg);
+	      socket.emit('tchat', msg);
 		$('#msg').val('');
 		$('#msg').focus();
 		return (false);
-  });
-  $('#msg').focus();
+	});
+	$('#msg').focus();
 });
 </script>
 <div style="text-align:center;margin-top:10px;">

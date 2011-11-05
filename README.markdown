@@ -1,19 +1,25 @@
-********************************************************
-******************* LIVE BALLS *************************
-********************************************************
+<h2>LIVE BALLS</h2>
 
-liveBalls is a application wich you can chat with others persons connected on your server and move with your mouse.
-
-You can see a picture of the application here : http://twitpic.com/5xutzf
+LiveBalls is an real time application wich you can chat with others persons connected on your server and move your ball with your mouse.
 
 You need to have nodejs and npm installed on your computer.
 
 You can install the application with 3 steps :
 
-- git clone git@github.com:IblitZ/liveBalls.git
-- cd liveBalls
-- node app.js
+<pre>
+git clone git://github.com/Atinux/liveBalls.git
+cd liveBalls
+npm install .
+node app.js
+</pre>
 
 -> Go to http://localhost:8080/ with 2 web browsers and enjoy !
 
-********************************************************
+<h2>Screenshot</h2>
+
+<img src="http://i1096.photobucket.com/albums/g325/Atinux/Capture-Ballsinrealtime-Chromium.png?t=1313853564" alt="preview" />
+
+<h2>Demonstration</h2>
+
+<b>Live :</b> http://liveballs.nodejitsu.com
+<b>Video :</b> http://www.youtube.com/watch?v=EqWD1WGrdjw

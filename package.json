@@ -2,7 +2,7 @@
   "author": "Sebastien Chopin <atinux@gmail.com> (https://twitter.com/Atinux)",
   "name": "LiveBalls",
   "description": "Real time Application",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/Atinux/liveBalls.git"
