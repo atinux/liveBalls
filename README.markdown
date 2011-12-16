@@ -9,7 +9,7 @@ You can install the application with 3 steps :
 <pre>
 git clone git://github.com/Atinux/liveBalls.git
 cd liveBalls
-npm install .
+npm install -d
 node app.js
 </pre>
 
