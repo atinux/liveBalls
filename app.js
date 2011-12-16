@@ -4,7 +4,6 @@
 
 var express = require('express');
 var io = require('socket.io');
-var jade = require('jade');
 
 var app = module.exports = express.createServer();
 var io = io.listen(app);
@@ -12,7 +11,6 @@ var io = io.listen(app);
 // Configuration
 
 app.configure(function() {
-  app.register('.html', jade); //use HTML files directly
   app.use(express.static(__dirname + '/public'));
 });
 
@@ -23,13 +21,6 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler());
 });
-
-// Routes
-
-app.get('/', function(req, res){
-  res.render('index.html');
-});
-
 
 // List of connected players's hash
 var tab_pl = [];
