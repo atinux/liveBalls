@@ -2,24 +2,19 @@
  * Module dependencies.
  */
 
+var http = require('http');
 var express = require('express');
 var io = require('socket.io');
 
-var app = module.exports = express.createServer();
-var io = io.listen(app);
+var app = express();
+// Express 3.0 comptability: https://github.com/visionmedia/express/wiki/Migrating-from-2.x-to-3.x
+var server = http.createServer(app);
+io = require('socket.io').listen(server);
 
 // Configuration
 
 app.configure(function() {
   app.use(express.static(__dirname + '/public'));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-  app.use(express.errorHandler());
 });
 
 // List of connected players's hash
@@ -73,10 +68,6 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-// HEROKU
-//var port = process.env.PORT || 3000;
-//app.listen(port);
-
-app.listen(8080);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+server.listen(8080);
+console.log("Server working on http://localhost:8080");
 
